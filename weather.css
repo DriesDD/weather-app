@@ -1,0 +1,97 @@
+@media screen and (max-width: 800px) {
+  .cards {
+    grid-template-columns: auto;
+  }
+  .chart-container {
+    width:90vw;}
+}
+@media screen and (min-width: 800px) {
+  .cards {
+    grid-template-columns: auto auto;
+  }
+  .chart-container {
+    width:45vw;}
+}
+@media screen and (min-width: 1200px) {
+  .cards {
+    grid-template-columns: auto auto auto;
+  }
+  .chart-container {
+    width:30vw;}
+}@media screen and (min-width: 2400px) {
+  .cards {
+    grid-template-columns: auto auto auto auto auto auto;
+  }
+  .chart-container {
+    width:15vw;}
+}
+
+.body {
+margin: 20px;
+font-family: 'Pangolin', cursive;
+}
+
+.cards {
+    display: grid;
+    padding: 10px;
+    grid-gap: 20px;
+    font-family: 'Pangolin', cursive;
+}
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  background-color: #001c;
+  color: #eee;
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 30px;
+  width: auto;
+  min-height: 300px;
+  border-radius: 30px;
+}
+
+.searchcard {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    background-color: #001c;
+    color: #eee;
+    display: flex;
+    flex-direction: column;
+    font-size: 16px;
+    padding: 30px;
+    width: auto;
+    min-height: 300px;
+    border-radius: 30px;
+
+    }
+
+h1 {margin: auto}
+
+.input {
+    background-color: white;
+    border-color: #dbdbdb;
+    border-radius: 30px;
+    height: 30px;
+    padding: 5px 10px;
+    font-size: 20px;
+    width: 210px;
+    font-family: 'Pangolin', cursive;
+    margin: 0px 10px 10px 10px;
+    color: #363636;
+}    
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+/* Add some padding inside the card container */
+.container {
+  padding: 2px 16px;
+}
+
+/* chart container */
+.chart-container {
+    position: relative;  
+}

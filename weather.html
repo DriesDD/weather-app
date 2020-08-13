@@ -9,27 +9,78 @@
     <meta name="author" content="name">
     <meta name="description" content="description here">
     <meta name="keywords" content="keywords,here">
-    <link rel="stylesheet" href="stylesheet.css" type="text/css">
-    <script src="Chart.bundle.js" defer></script>
+    <link rel="stylesheet" href="weather.css" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap" rel="stylesheet"> 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.3/dist/Chart.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0" defer></script>
     <script src="weather.js" defer></script>
 </head>
 
 <body>
 
-    <div id="hero" class="hero is-dark is-fullheight">
+    <div class="cards">
 
-            <div class="my-5 hero-head container columns gap-0 is-centered">
-                <h1 class="title column has-text-right">How's the weather in</h1>
-                <div class="field column is-focused  has-icons-left mx-2 mb-4">
-                    <input id="inputcity" class="input" type="text" placeholder="Enter City"> </div>
-                <h1 class="title column has-text-left"> ?</h1>
+        <div class="searchcard">
+            <h1 class="item">Hey, how's the weather </br> in
+            <input id="inputcity" class="input item" type="text" placeholder="Enter City"> </input>
+            ?</h1>
+        </div>
+
+        <div class="card">
+            <container class="chart-container">
+                <canvas id="chart1"></canvas>
+            </container>
+            <div class="container">
+                <h4><b>Today</b></h4>
+                <p>Sunny</p>
             </div>
+        </div>
 
+        <div class="card">
+            <container class="chart-container">
+                <canvas id="chart2"></canvas>
+            </container>
+            <div class="container">
+                <h4><b>Tomorrow</b></h4>
+                <p>Sunny</p>
+            </div>
+        </div>
 
-        <container class="chart-container hero-body" style="position: relative; height:60vh; width:90vw">
-            <canvas id="mixed-chart"></canvas>
-        </container>
+        <div class="card">
+            <container class="chart-container">
+                <canvas id="chart3"></canvas>
+            </container>
+            <div class="container">
+                <h4><b>The next day</b></h4>
+                <p>Sunny</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <container class="chart-container">
+                <canvas id="chart4"></canvas>
+            </container>
+            <div class="container">
+                <h4><b>The next day</b></h4>
+                <p>Sunny</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <container class="chart-container">
+                <canvas id="chart5"></canvas>
+            </container>
+            <div class="container">
+                <h4><b>The next day</b></h4>
+                <p>Sunny</p>
+            </div>
+        </div>
+
     </div>
+
+
+
+
 
 
 
