@@ -101,16 +101,9 @@ font-family: 'Pangolin', cursive;
   pointer-events: none;
 }
 
-
-/* On mouse-over, add a deeper shadow */
-.card:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-}
-
-/* Add some padding inside the card container */
-.container {
-  padding: 2px 16px;
-}
+.arrow
+{position: absolute;
+font-size: 22px;}
 
 /* chart container */
 .chart-container {
