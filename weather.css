@@ -40,7 +40,7 @@ font-family: 'Pangolin', cursive;
 .card {
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   transition: 0.3s;
-  background-color: #001c;
+  background-color: #001b;
   color: #eee;
   align-items: stretch;
   display: flex;
@@ -55,10 +55,12 @@ font-family: 'Pangolin', cursive;
 .searchcard {
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
-    background-color: #001c;
+    background-color: #001b;
     color: #eee;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     font-size: 16px;
     padding: 30px;
     width: auto;
@@ -67,7 +69,15 @@ font-family: 'Pangolin', cursive;
 
     }
 
-h1 {margin: auto}
+.searchcard.item {margin: auto}
+
+.stack{
+  display: grid;
+}
+.stack > * {
+  grid-row: 1;
+  grid-column: 1;
+}
 
 .input {
     background-color: white;
@@ -80,7 +90,18 @@ h1 {margin: auto}
     font-family: 'Pangolin', cursive;
     margin: 0px 10px 10px 10px;
     color: #363636;
-}    
+}
+
+.placeholder {
+  font-size: 20px;
+  height: 30px;
+  padding: 10px 10px;
+  margin: 0px 10px 10px 10px;
+  color: #0003;
+  pointer-events: none;
+}
+
+
 /* On mouse-over, add a deeper shadow */
 .card:hover {
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);

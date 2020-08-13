@@ -10,7 +10,7 @@
     <meta name="description" content="description here">
     <meta name="keywords" content="keywords,here">
     <link rel="stylesheet" href="weather.css" type="text/css">
-    <link href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.3/dist/Chart.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0" defer></script>
     <script src="weather.js" defer></script>
@@ -18,12 +18,18 @@
 
 <body>
 
-    <div class="cards">
+    <div id="background" class="cards">
 
         <div class="searchcard">
-            <h1 class="item">Hey, how's the weather </br> in
-            <input id="inputcity" class="input item" type="text" placeholder="Enter City"> </input>
-            ?</h1>
+            <div class="item">
+                <h1>Find the weather in
+                    <div class="stack">
+                    <input id="inputcity" class="input item" type="text"> </input>
+                    <p id = "placeholder" class="placeholder"></p>
+                    </div>
+                </h1>
+                <p id="found"></p>
+            </div>
         </div>
 
         <div class="card">

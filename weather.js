@@ -1,4 +1,4 @@
-let url, city, weatherdata, photodata, tarray, tfeelsarray, iconarray, timearray, hoursarray, now,
+let url, city, weatherdata, photodata, tarray, tfeelsarray, iconarray, timearray, hoursarray, now, timeblock,
     tarray1, tarray2, tarray3, tarray4, tarray5
 
 //to do
@@ -20,12 +20,15 @@ document.getElementById('inputcity').oninput = () => {
 }
 
 async function update() {
+    if (document.getElementById("placeholder").innerText.length -4 < document.getElementById('inputcity').value.length)
+    {document.getElementById("placeholder").innerText = ""}
     url = 'https://api.openweathermap.org/data/2.5/forecast?q=' + city + '&mode=xmly&appid=48a8b4741cc8cb086ca2bbffc8c983cb'
     tempweatherdata = await getData(url)
     if (tempweatherdata.city != undefined) {
         weatherdata = tempweatherdata
+        document.getElementById("placeholder").innerText = weatherdata.city.name + ", "+weatherdata.city.country
         console.log(weatherdata.list)
-        updatebackground()
+        //updatebackground()
 
         //make arrays of all the needed data points
         tarray = [];
@@ -53,8 +56,9 @@ async function update() {
 
         //for the first day, add the missing hours that have already passed to the front
         now = new Date(weatherdata.list[0].dt_txt)
-        console.log(now.getHours() / 3)
-        for (i = 1; i < now.getHours() / 3; i++) {
+        //divide by 3 and correct for timezone
+        timeblock = Math.floor((now.getHours() + weatherdata.city.timezone/3600)/3 ) % 8;
+        for (i = 1; i < timeblock; i++) {
             timearray.unshift(null)
             hoursarray.unshift(now.getHours() - i * 3 + "h")
             tarray.unshift(null)
@@ -101,7 +105,6 @@ async function update() {
                         xAxes: [{
                             drawBorder: false
                         }],
-
                     },
                     tooltips: {
                         enabled: false
