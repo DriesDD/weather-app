@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>How's the weather?</title>
+    <meta name="author" content="name">
+    <meta name="description" content="description here">
+    <meta name="keywords" content="keywords,here">
+    <link rel="stylesheet" href="stylesheet.css" type="text/css">
+    <script src="Chart.bundle.js" defer></script>
+    <script src="weather.js" defer></script>
+</head>
+
+<body>
+
+    <div id="hero" class="hero is-dark is-fullheight">
+
+            <div class="my-5 hero-head container columns gap-0 is-centered">
+                <h1 class="title column has-text-right">How's the weather in</h1>
+                <div class="field column is-focused  has-icons-left mx-2 mb-4">
+                    <input id="inputcity" class="input" type="text" placeholder="Enter City"> </div>
+                <h1 class="title column has-text-left"> ?</h1>
+            </div>
+
+
+        <container class="chart-container hero-body" style="position: relative; height:60vh; width:90vw">
+            <canvas id="mixed-chart"></canvas>
+        </container>
+    </div>
+
+
+
+
+</body>
+
+</html>
