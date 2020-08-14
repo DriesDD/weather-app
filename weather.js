@@ -1,15 +1,11 @@
-    let url, city, weatherdata, photodata, tarray, warray, iconarray, timearray, hoursarray, now, timeblock,
+//note: code is not optimized yet
+    
+    let url, city, weatherdata, photodata, tarray, warray, timearray, hoursarray, now, timeblock,
         tarray1 = [],
         tarray2 = [],
         tarray3 = [],
         tarray4 = [],
         tarray5 = [],
-
-        warray1 = [],
-        warray2 = [],
-        warray3 = [],
-        warray4 = [],
-        warray5 = [],
         graphmin, graphmax, graphdif
 
     async function getData(url, params) {
@@ -34,33 +30,36 @@
         if (tempweatherdata.city != undefined) {
             weatherdata = tempweatherdata
             document.getElementById("placeholder").innerText = weatherdata.city.name + ", " + weatherdata.city.country
-            console.log(weatherdata.list)
             //updatebackground()
 
-            //make arrays of all the needed data points
+            //clear arrays of all the needed data points
             tarray = [];
+            tarray1 = [];
+            tarray2 = [];
+            tarray3 = [];
+            tarray4 = [];
+            tarray5 = [];
             warray = [];
             timearray = [];
-            iconarray = [];
             hoursarray = [];
             graphmin = 30;
             graphmax = 0;
             let day;
+
+            //add data to the arrays
             for (i = 0; i < weatherdata.list.length; i++) {
                 timearray.push(Date(weatherdata.list[i].dt_txt))
                 let day = new Date(weatherdata.list[i].dt_txt)
                 hoursarray.push(day.getHours() + "h")
                 tarray.push(Math.round(weatherdata.list[i].main.temp - 273.15))
-                warray.push(Math.round(weatherdata.list[i].weather[0].icon))
-                iconarray.push("http://openweathermap.org/img/w/" + weatherdata.list[i].weather[0].icon + ".png");
+                warray.push(weatherdata.list[i].weather[0].icon)
                 //add the standardized minima and maxima which are the same for each day chart
                 graphmin = Math.min(graphmin, tarray[i])
                 graphmax = Math.max(graphmax, tarray[i])
             }
-            graphmin = Math.floor((graphmin - 1) / 5) * 5
-            graphmax = Math.ceil((graphmax + 1) / 5) * 5
+            graphmin = Math.floor((graphmin - 2) / 5) * 5
+            graphmax = Math.ceil((graphmax + 7) / 5) * 5
             graphdif = graphmax - graphmin
-            console.log(graphmin, graphmax)
 
             //for the first day, add the missing hours that have already passed to the front
             now = new Date(weatherdata.list[0].dt_txt)
@@ -71,7 +70,6 @@
                 hoursarray.unshift(now.getHours() - i * 3 + "h")
                 tarray.unshift(null)
                 warray.unshift(null)
-                iconarray.unshift(null)
             }
             //now break up the array in five arrays of one day each
             tarray1 = tarray.slice(0, 9);
@@ -79,10 +77,17 @@
             tarray3 = tarray.slice(16, 25);
             tarray4 = tarray.slice(24, 33);
             tarray5 = tarray.slice(32, 41);
+
             hoursarray1 = hoursarray.slice(0, 9);
 
             Chart.defaults.global.defaultFontSize = '14';
             Chart.defaults.global.defaultFontFamily = "'Pangolin',  cursive;";
+
+
+                //clear the old symbols
+                for (i = 0; i < document.getElementsByClassName('note').length; i++) {
+                    document.getElementsByClassName('note')[i].remove()
+                }
 
             //now the tables
             for (i = 1; i <= 5; i++) {
@@ -146,22 +151,52 @@
 
                 });
 
-                //draw symbols on top of the graph
-                for (j = 0; j < 9; j++) {
-                    let html = document.createElement("div");
-                    html.classList.add('note');
-                    let img = document.createElement("img");
-                    const bottom = String(-15 + ((Number((eval('tarray' + i))[j]) - graphmin) / graphdif) * 80) + '%';
-                    const left = String((100 / 8) * j + 2) + '%';
-                    img.setAttribute('src', warray[i * 8 + j])
-                    html.appendChild(img);
-                    html.style.bottom = bottom;
-                    html.style.left = left;
-                    const target = document.getElementById('chart' + i).parentElement;
-                    target.appendChild(html)
+                let day = 0
+                const weekdays = ['sunday','monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
+                //add the day
+                switch (i)
+                {case 1: day = today; break, 
+                 case 2: day = tomorrow; break;
+                 case 3: case 4: case 5: day = new Date(weatherdata.list[i*8-8].dt_txt);
+                 day = weekdays[day.getDay()]
                 }
+                console.log(day);
+                document.getElementById('day' + i).innerText = day
+
+
+                //draw symbols on top of the graph
+                let daymax = -1000;
+                let daymaxtime = null;
+                const target = document.getElementById('chart' + i).parentElement;
+
+                for (j = 0; j < 9; j++) {
+                    if (warray[(i - 1) * 8 + j] != null) {
+                        let html = document.createElement("div");
+                        html.classList.add('note');
+                        html.classList.add('icon');
+                        let img = document.createElement("img");
+                        img.style.width = '80px';
+                        const bottom = "calc(-16px + " + String(((Number((eval('tarray' + i))[j]) - graphmin) / graphdif) * 85 + 0) + '%)';
+                        const left = String(-7 + (100 / 8.3) * j + 2) + '%';
+                        img.setAttribute('src', "http://openweathermap.org/img/wn/" + warray[(i - 1) * 8 + j] + "@2x.png")
+                        html.appendChild(img);
+                        html.style.bottom = bottom;
+                        html.style.left = left;
+                        target.appendChild(html)
+                        if (Number((eval('tarray' + i))[j]) > daymax)
+                        {daymax = Number((eval('tarray' + i))[j])
+                         daymaxtime = j}                       
+                    }
+                }
+                point(i,daymaxtime,String(daymax)+'°C');
+                point(i,8,String((eval('tarray' + i))[8])+'°C');
+
 
                 //now add some notes with pointers 
+
+
+
+
                 /*
                 point(1, 0, 'pointy')
                 point(1, 1, 'pointy')
@@ -191,7 +226,6 @@
     update()
 
     async function updatebackground() {
-
         photodata = await getData('https://api.unsplash.com/photos/random?client_id=p2RsPWAavBwh-hvyW9GzFInfh3S3PC7W7VnLkTG6wVo&query=' + city + '%20sky&orientation=landscape')
         document.getElementById("background").style = "background-image: url(" + photodata.urls.regular + ");background-position: center;background-size: cover"
     }
@@ -202,12 +236,12 @@
         html.classList.add('note');
         let img = document.createElement("img");
         let lbl = document.createTextNode(label);
-        const bottom = String(-15 + ((Number((eval('tarray' + day))[time]) - graphmin) / graphdif) * 80) + '%';
-        const left = String((100 / 8) * time + 2) + '%';
-        const top = String(60 - ((Number((eval('tarray' + day))[time]) - graphmin) / graphdif) * 80) + '%';
+        const bottom = String(-20 + ((Number((eval('tarray' + day))[time]) - graphmin) / graphdif) * 80) + '%';
+        const left = String(-14 +(100 / 8) * time + 2) + '%';
+        const top = String(55 - ((Number((eval('tarray' + day))[time]) - graphmin) / graphdif) * 80) + '%';
         const right = String(100 - ((100 / 8) * time + 2)) + '%';
-        switch (Math.floor((time + 1) / 2.001)) {
-            case 0:
+        switch (time) {
+                case 0: case 1: 
                 img.setAttribute('src', "arrow0.svg");
                 html.appendChild(lbl);
                 html.appendChild(document.createElement("br"));
@@ -215,7 +249,7 @@
                 html.style.top = top;
                 html.style.right = right;
                 break;
-            case 1:
+                case 2: case 3: 
                 img.setAttribute('src', "arrow1.svg");
                 html.appendChild(img);
                 html.appendChild(document.createElement("br"));
@@ -223,7 +257,7 @@
                 html.style.bottom = bottom;
                 html.style.left = left;
                 break;
-            case 2:
+                case 4:  case 5: case 6: 
                 img.setAttribute('src', "arrow2.svg");
                 html.appendChild(img);
                 html.appendChild(document.createElement("br"));
@@ -231,7 +265,7 @@
                 html.style.bottom = bottom;
                 html.style.right = right;
                 break;
-            case 3:
+                case 7: case 8: case 9:
                 img.setAttribute('src', "arrow3.svg");
                 html.appendChild(lbl);
                 html.appendChild(document.createElement("br"));

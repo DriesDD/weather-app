@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>How's the weather?</title>
+    <title>weathernotes</title>
     <meta name="author" content="name">
     <meta name="description" content="description here">
     <meta name="keywords" content="keywords,here">
@@ -16,13 +16,14 @@
     <script src="weather.js" defer></script>
 </head>
 
-<body>
+<body id="background">
 
-    <div id="background" class="cards">
+<div class = "flexbox">
+    <div class="cards">
 
         <div class="searchcard">
             <div class="item">
-                <h1>Find the weather in
+                <h1>weathernotes for:
                     <div class="stack">
                     <input id="inputcity" class="input item" type="text"> </input>
                     <p id = "placeholder" class="placeholder"></p>
@@ -35,6 +36,7 @@
         <div class="card">
             <container class="chart-container">
                 <canvas id="chart1"></canvas>
+                <div class="day">today</div>
             </container>
 
         </div>
@@ -42,6 +44,7 @@
         <div class="card">
             <container class="chart-container">
                 <canvas id="chart2"></canvas>
+                <div class="day">tomorrow</div>
             </container>
 
         </div>
@@ -49,6 +52,7 @@
         <div class="card">
             <container class="chart-container">
                 <canvas id="chart3"></canvas>
+                <div id="day3" class="day">today</div>
             </container>
  
         </div>
@@ -56,6 +60,7 @@
         <div class="card">
             <container class="chart-container">
                 <canvas id="chart4"></canvas>
+                <div id="day4" class="day">today</div>
             </container>
  
         </div>
@@ -63,13 +68,14 @@
         <div class="card">
             <container class="chart-container">
                 <canvas id="chart5"></canvas>
+                <div id="day5" class="day">today</div>
             </container>
  
         </div>
 
     </div>
 
-
+</div>
 
 
 
