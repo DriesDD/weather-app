@@ -5,8 +5,9 @@
   .chart-container {
     width:90vw;}
   .day {
-    font-size: 20px;
-  }
+    font-size: 20px;}
+  .icon {
+    width : 30px;}
 }
 @media screen and (min-width: 800px) {
   .cards {
@@ -17,6 +18,8 @@
     .day {
       font-size: 25px;
     }
+    .icon{
+      width : 40px;}
 }
 @media screen and (min-width: 1200px) {
   .cards {
@@ -27,6 +30,9 @@
     .day {
       font-size: 30px;
     }
+    .icon {
+      width : 60px;}
+
 }@media screen and (min-width: 2400px) {
   .cards {
     grid-template-columns: auto auto auto auto auto auto;

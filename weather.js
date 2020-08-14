@@ -28,6 +28,13 @@
         url = 'https://api.openweathermap.org/data/2.5/forecast?q=' + city + '&mode=xmly&appid=48a8b4741cc8cb086ca2bbffc8c983cb'
         tempweatherdata = await getData(url)
         if (tempweatherdata.city != undefined) {
+
+            //clear the old symbols
+            for (i = 0; i < document.getElementsByClassName('note').length; i++) {
+                document.getElementsByClassName('note')[i].remove()
+            }
+
+
             weatherdata = tempweatherdata
             document.getElementById("placeholder").innerText = weatherdata.city.name + ", " + weatherdata.city.country
             updatebackground()
@@ -65,6 +72,7 @@
             now = new Date(weatherdata.list[0].dt_txt)
             //divide by 3 and correct for timezone
             timeblock = Math.floor((now.getHours() + weatherdata.city.timezone / 3600) / 3) % 8;
+
             for (i = 1; i < timeblock; i++) {
                 timearray.unshift(null)
                 hoursarray.unshift(now.getHours() - i * 3 + "h")
@@ -82,12 +90,6 @@
 
             Chart.defaults.global.defaultFontSize = '14';
             Chart.defaults.global.defaultFontFamily = "'Pangolin',  cursive;";
-
-
-                //clear the old symbols
-                for (i = 0; i < document.getElementsByClassName('note').length; i++) {
-                    document.getElementsByClassName('note')[i].remove()
-                }
 
             //now the tables
             for (i = 1; i <= 5; i++) {
@@ -133,7 +135,7 @@
                         },
                         legend: {
                             display: false
-                        },
+                        }/*,
                         plugins: {
                             datalabels: {
                                 color: '#fa0',
@@ -146,7 +148,7 @@
                                 },
                                 pointLabelFontSize: 20
                             }
-                        }
+                        }*/
                     }
 
                 });
@@ -174,9 +176,9 @@
                         html.classList.add('note');
                         html.classList.add('icon');
                         let img = document.createElement("img");
-                        img.style.width = '80px';
-                        const bottom = "calc(-16px + " + String(((Number((eval('tarray' + i))[j]) - graphmin) / graphdif) * 85 + 0) + '%)';
-                        const left = String(-7 + (100 / 8.3) * j + 2) + '%';
+                        img.style.width = '60px';
+                        const bottom = "calc(-4px + " + String(((Number((eval('tarray' + i))[j]) - graphmin) / graphdif) * 85 + 0) + '%)';
+                        const left = String(-5 + (100 / 8.3) * j + 2) + '%';
                         img.setAttribute('src', "http://openweathermap.org/img/wn/" + warray[(i - 1) * 8 + j] + "@2x.png")
                         html.appendChild(img);
                         html.style.bottom = bottom;
@@ -189,36 +191,6 @@
                 }
                 point(i,daymaxtime,String(daymax)+'°C');
                 point(i,8,String((eval('tarray' + i))[8])+'°C');
-
-
-                //now add some notes with pointers 
-
-
-
-
-                /*
-                point(1, 0, 'pointy')
-                point(1, 1, 'pointy')
-                point(1, 2, 'pointy')
-                point(1, 3, 'pointy')
-                point(1, 4, 'pointy')
-                point(1, 5, 'pointy')
-                point(1, 6, 'pointy')
-                point(1, 7, 'pointy')
-                point(1, 8, 'pointy')
-                point(2, 0, 'pointy')
-                point(2, 1, 'pointy')
-                point(2, 2, 'pointy')
-                point(2, 3, 'pointy')
-                point(2, 4, 'pointy')
-                point(2, 5, 'pointy')
-                point(2, 6, 'pointy')
-                point(2, 7, 'pointy')
-                point(2, 8, 'pointy')
-                
-                for (i = 0; i < 9; i++)
-                if 
-                */
             }
         }
     }
@@ -236,7 +208,7 @@
         let img = document.createElement("img");
         let lbl = document.createTextNode(label);
         const bottom = String(-20 + ((Number((eval('tarray' + day))[time]) - graphmin) / graphdif) * 80) + '%';
-        const left = String(-14 +(100 / 8) * time + 2) + '%';
+        const left = String(-0 +(100 / 9) * time + 2) + '%';
         const top = String(55 - ((Number((eval('tarray' + day))[time]) - graphmin) / graphdif) * 80) + '%';
         const right = String(100 - ((100 / 8) * time + 2)) + '%';
         switch (time) {
