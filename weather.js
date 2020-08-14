@@ -87,7 +87,6 @@
 
             hoursarray1 = hoursarray.slice(0, 9);
 
-            Chart.defaults.global.defaultFontSize = '14';
             Chart.defaults.global.defaultFontFamily = "'Pangolin',  cursive;";
 
             //now the tables
@@ -99,7 +98,7 @@
                         datasets: [{
                             label: "Temperature in °C",
                             type: "line",
-                            borderColor: "#fa0",
+                            borderColor: "#fff",
                             borderWidth: 5,
                             data: eval('tarray' + i),
                             pointStyle: 'https://openweathermap.org/img/w/10d.png',
