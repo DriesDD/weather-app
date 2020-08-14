@@ -1,5 +1,4 @@
-//note: code is not optimized yet
-    
+//note: code is not cleaned up yet
     let url, city, weatherdata, photodata, tarray, warray, timearray, hoursarray, now, timeblock,
         tarray1 = [],
         tarray2 = [],
@@ -30,7 +29,7 @@
         if (tempweatherdata.city != undefined) {
 
             //clear the old symbols
-            for (i = 0; i < document.getElementsByClassName('note').length; i++) {
+            for (i = document.getElementsByClassName('note').length-1; i >= 0; i--) {
                 document.getElementsByClassName('note')[i].remove()
             }
 
@@ -162,7 +161,12 @@
                  case 3: case 4: case 5: day = new Date(weatherdata.list[i*8-8].dt_txt);
                  day = weekdays[day.getDay()]
                 }
-                document.getElementById('day' + i).innerText = day + ": " + weatherdata.list[i*8-8].weather[0].description + " to " + weatherdata.list[i*8-5].weather[0].description 
+                if ((weatherdata.list[i*8-11] != undefined) && (weatherdata.list[i*8-6] != undefined))
+                {
+                document.getElementById('day' + i).innerText = day + ": " + weatherdata.list[i*8-11].weather[0].description + " to " + weatherdata.list[i*8-6].weather[0].description }
+                else
+                {
+                    document.getElementById('day' + i).innerText = day + " is a beautiful day with " + weatherdata.list[i*8-6].weather[0].description }
 
 
                 //draw symbols on top of the graph
@@ -177,7 +181,7 @@
                         html.classList.add('icon');
                         let img = document.createElement("img");
                         img.style.width = '60px';
-                        const bottom = "calc(-4px + " + String(((Number((eval('tarray' + i))[j]) - graphmin) / graphdif) * 85 + 0) + '%)';
+                        const bottom = "calc(-6px + " + String(((Number((eval('tarray' + i))[j]) - graphmin) / graphdif) * 90 + 0) + '%)';
                         const left = String(-5 + (100 / 8.3) * j + 2) + '%';
                         img.setAttribute('src', "http://openweathermap.org/img/wn/" + warray[(i - 1) * 8 + j] + "@2x.png")
                         html.appendChild(img);
@@ -194,7 +198,6 @@
             }
         }
     }
-    update()
 
     async function updatebackground() {
         photodata = await getData('https://api.unsplash.com/photos/random?client_id=p2RsPWAavBwh-hvyW9GzFInfh3S3PC7W7VnLkTG6wVo&query=' + city + '%20sky&orientation=landscape')
