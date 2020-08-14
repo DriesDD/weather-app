@@ -4,6 +4,9 @@
   }
   .chart-container {
     width:90vw;}
+  .day {
+    font-size: 20px;
+  }
 }
 @media screen and (min-width: 800px) {
   .cards {
@@ -11,6 +14,9 @@
   }
   .chart-container {
     width:45vw;}
+    .day {
+      font-size: 25px;
+    }
 }
 @media screen and (min-width: 1200px) {
   .cards {
@@ -18,6 +24,9 @@
   }
   .chart-container {
     width:30vw;}
+    .day {
+      font-size: 30px;
+    }
 }@media screen and (min-width: 2400px) {
   .cards {
     grid-template-columns: auto auto auto auto auto auto;
@@ -109,10 +118,10 @@ font-family: 'Pangolin', cursive;
 
 .day 
 {position: absolute;
-  font-size: 30px;
   display: block;
-  top: 20px;
-  left: 40px;
+  top: 10px;
+  left: 20px;
+  right: 20px;
 }
 .note
 {position: absolute;

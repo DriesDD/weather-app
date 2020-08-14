@@ -30,7 +30,7 @@
         if (tempweatherdata.city != undefined) {
             weatherdata = tempweatherdata
             document.getElementById("placeholder").innerText = weatherdata.city.name + ", " + weatherdata.city.country
-            //updatebackground()
+            updatebackground()
 
             //clear arrays of all the needed data points
             tarray = [];
@@ -153,15 +153,14 @@
 
                 let day = 0
                 const weekdays = ['sunday','monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
-                //add the day
+                //add the day and a brief forecast
                 switch (i)
-                {case 1: day = today; break, 
-                 case 2: day = tomorrow; break;
+                {case 1: day = 'today'; break;
+                 case 2: day = 'tomorrow'; break;
                  case 3: case 4: case 5: day = new Date(weatherdata.list[i*8-8].dt_txt);
                  day = weekdays[day.getDay()]
                 }
-                console.log(day);
-                document.getElementById('day' + i).innerText = day
+                document.getElementById('day' + i).innerText = day + ": " + weatherdata.list[i*8-8].weather[0].description + " to " + weatherdata.list[i*8-5].weather[0].description 
 
 
                 //draw symbols on top of the graph
