@@ -1,9 +1,15 @@
-    let url, city, weatherdata, photodata, tarray, tfeelsarray, iconarray, timearray, hoursarray, now, timeblock,
+    let url, city, weatherdata, photodata, tarray, warray, iconarray, timearray, hoursarray, now, timeblock,
         tarray1 = [],
         tarray2 = [],
         tarray3 = [],
         tarray4 = [],
         tarray5 = [],
+
+        warray1 = [],
+        warray2 = [],
+        warray3 = [],
+        warray4 = [],
+        warray5 = [],
         graphmin, graphmax, graphdif
 
     async function getData(url, params) {
@@ -33,8 +39,8 @@
 
             //make arrays of all the needed data points
             tarray = [];
+            warray = [];
             timearray = [];
-            tfeelsarray = [];
             iconarray = [];
             hoursarray = [];
             graphmin = 30;
@@ -45,7 +51,7 @@
                 let day = new Date(weatherdata.list[i].dt_txt)
                 hoursarray.push(day.getHours() + "h")
                 tarray.push(Math.round(weatherdata.list[i].main.temp - 273.15))
-                tfeelsarray.push(Math.round(weatherdata.list[i].main.feels_like - 273.15))
+                warray.push(Math.round(weatherdata.list[i].weather[0].icon))
                 iconarray.push("http://openweathermap.org/img/w/" + weatherdata.list[i].weather[0].icon + ".png");
                 //add the standardized minima and maxima which are the same for each day chart
                 graphmin = Math.min(graphmin, tarray[i])
@@ -64,7 +70,7 @@
                 timearray.unshift(null)
                 hoursarray.unshift(now.getHours() - i * 3 + "h")
                 tarray.unshift(null)
-                tfeelsarray.unshift(null)
+                warray.unshift(null)
                 iconarray.unshift(null)
             }
             //now break up the array in five arrays of one day each
@@ -139,28 +145,47 @@
                     }
 
                 });
+
+                //draw symbols on top of the graph
+                for (j = 0; j < 9; j++) {
+                    let html = document.createElement("div");
+                    html.classList.add('note');
+                    let img = document.createElement("img");
+                    const bottom = String(-15 + ((Number((eval('tarray' + i))[j]) - graphmin) / graphdif) * 80) + '%';
+                    const left = String((100 / 8) * j + 2) + '%';
+                    img.setAttribute('src', warray[i * 8 + j])
+                    html.appendChild(img);
+                    html.style.bottom = bottom;
+                    html.style.left = left;
+                    const target = document.getElementById('chart' + i).parentElement;
+                    target.appendChild(html)
+                }
+
+                //now add some notes with pointers 
+                /*
+                point(1, 0, 'pointy')
+                point(1, 1, 'pointy')
+                point(1, 2, 'pointy')
+                point(1, 3, 'pointy')
+                point(1, 4, 'pointy')
+                point(1, 5, 'pointy')
+                point(1, 6, 'pointy')
+                point(1, 7, 'pointy')
+                point(1, 8, 'pointy')
+                point(2, 0, 'pointy')
+                point(2, 1, 'pointy')
+                point(2, 2, 'pointy')
+                point(2, 3, 'pointy')
+                point(2, 4, 'pointy')
+                point(2, 5, 'pointy')
+                point(2, 6, 'pointy')
+                point(2, 7, 'pointy')
+                point(2, 8, 'pointy')
+                
+                for (i = 0; i < 9; i++)
+                if 
+                */
             }
-
-            //now add some pointers to some values
-            point(1, 0, 'pointy')
-            point(1, 1, 'pointy')
-            point(1, 2, 'pointy')
-            point(1, 3, 'pointy')
-            point(1, 4, 'pointy')
-            point(1, 5, 'pointy')
-            point(1, 6, 'pointy')
-            point(1, 7, 'pointy')
-            point(1, 8, 'pointy')
-            point(2, 0, 'pointy')
-            point(2, 1, 'pointy')
-            point(2, 2, 'pointy')
-            point(2, 3, 'pointy')
-            point(2, 4, 'pointy')
-            point(2, 5, 'pointy')
-            point(2, 6, 'pointy')
-            point(2, 7, 'pointy')
-            point(2, 8, 'pointy')
-
         }
     }
     update()
@@ -173,18 +198,49 @@
 
 
     function point(day, time, label) {
-        let html = document.createElement("p");
-        html.classList.add('arrow');
+        let html = document.createElement("div");
+        html.classList.add('note');
         let img = document.createElement("img");
-        img.setAttribute('src', "arrow1.svg")
-        html.appendChild(img);
         let lbl = document.createTextNode(label);
-        html.appendChild(lbl);
-        const temp = String(-15 + ((Number((eval('tarray' + day))[time]) - graphmin) / graphdif) * 80) + '%';
-        html.style.bottom = temp;
-        html.style.left = String((100 / 8) * time + 2) + '%';
-        console.log(html)
+        const bottom = String(-15 + ((Number((eval('tarray' + day))[time]) - graphmin) / graphdif) * 80) + '%';
+        const left = String((100 / 8) * time + 2) + '%';
+        const top = String(60 - ((Number((eval('tarray' + day))[time]) - graphmin) / graphdif) * 80) + '%';
+        const right = String(100 - ((100 / 8) * time + 2)) + '%';
+        switch (Math.floor((time + 1) / 2.001)) {
+            case 0:
+                img.setAttribute('src', "arrow0.svg");
+                html.appendChild(lbl);
+                html.appendChild(document.createElement("br"));
+                html.appendChild(img);
+                html.style.top = top;
+                html.style.right = right;
+                break;
+            case 1:
+                img.setAttribute('src', "arrow1.svg");
+                html.appendChild(img);
+                html.appendChild(document.createElement("br"));
+                html.appendChild(lbl);
+                html.style.bottom = bottom;
+                html.style.left = left;
+                break;
+            case 2:
+                img.setAttribute('src', "arrow2.svg");
+                html.appendChild(img);
+                html.appendChild(document.createElement("br"));
+                html.appendChild(lbl);
+                html.style.bottom = bottom;
+                html.style.right = right;
+                break;
+            case 3:
+                img.setAttribute('src', "arrow3.svg");
+                html.appendChild(lbl);
+                html.appendChild(document.createElement("br"));
+                html.appendChild(img);
+                html.style.top = top;
+                html.style.left = left;
+                break;
+
+        }
         const target = document.getElementById('chart' + day).parentElement;
         target.appendChild(html)
     }
-

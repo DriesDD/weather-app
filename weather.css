@@ -103,7 +103,8 @@ font-family: 'Pangolin', cursive;
 
 .arrow
 {position: absolute;
-font-size: 22px;}
+font-size: 22px;
+display: block;}
 
 /* chart container */
 .chart-container {
